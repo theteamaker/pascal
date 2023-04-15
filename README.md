@@ -14,10 +14,10 @@ The user then manually uploads all videos to the desired YouTube channel, and, a
 YouTube API's daily quota for new developers is currently **10,000**. Each video upload costs 1,600 tokens, meaning that I could only upload a maximum of 6 videos per day if I were to upload it through the API. By handling this part of the process myself, massive amounts of API tokens are saved for what's ultimately the harder end of the work: metadata formatting, video titling, and playlist management.
 
 ## Requirements
-[ffmpeg](https://ffmpeg.org/) — .exe can be stored in runtime dir, or PATH variable
-[google-api-python-client](https://pypi.org/project/google-api-python-client/) >= 2.85.0
-[google-auth-httplib2](https://pypi.org/project/google-auth-httplib2/) >= 0.1.0
-[google-auth-oauthlib](https://pypi.org/project/google-auth-oauthlib/) >= 1.0.0
+- [ffmpeg](https://ffmpeg.org/) — .exe can be stored in runtime dir, or PATH variable
+- [google-api-python-client](https://pypi.org/project/google-api-python-client/) >= 2.85.0
+- [google-auth-httplib2](https://pypi.org/project/google-auth-httplib2/) >= 0.1.0
+- [google-auth-oauthlib](https://pypi.org/project/google-auth-oauthlib/) >= 1.0.0
 
 ## Usage
 ### Before you begin...
