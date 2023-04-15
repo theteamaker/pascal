@@ -22,7 +22,9 @@ def generate_json():
         soundtrack = []
 
         while True:
-            folder_path = input("Input Soundtrack Path: ")
+            folder_name = input("Input Soundtrack Folder Name: ")
+            folder_path = f"osts/{folder_name}"
+
             try:
                 os.listdir(folder_path)
             except FileNotFoundError:
@@ -42,7 +44,21 @@ def generate_json():
 
         master_dict = {}
 
-        exp = input("Regex Expression (leave blank if title editing is unnecessary): ")
+        exp = ""
+        while True:
+            to_exp = input("Regex Expression (leave blank if title editing is unnecessary): ")
+
+            if to_exp == "":
+                break
+            
+            # Print an example for confirmation 
+            print(re.sub(to_exp, "", soundtrack[0])) 
+            correct = input("Is the expected formatting correct? (y/n)\n")
+            if correct.lower() == "y":
+                exp = to_exp
+                break
+            elif correct.lower() == "n":
+                continue
 
         for filename in soundtrack:
 
@@ -62,7 +78,7 @@ def generate_json():
         with open("dictionary.json", "w") as outfile:
             outfile.write(json_object)
             
-        return len(json_object) - 1
+        return len(soundtrack)
     
     except Exception as e:
         return e

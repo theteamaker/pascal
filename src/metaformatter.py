@@ -51,7 +51,7 @@ def metaformat(specifications):
     playlist_response = playlist_request.execute()
     playlist_id = playlist_response['id']
 
-    with open('../dictionary.json') as openfile:
+    with open('dictionary.json') as openfile:
 
         loaded_dict = json.load(openfile)
 
@@ -60,47 +60,53 @@ def metaformat(specifications):
                 continue
         
             for num, video in enumerate(search_response["items"]):
-                if str(song) in video["snippet"]["title"]:
-                    id = video["id"]["videoId"]
-                    
-                    unformatted_description = (
-                        f"Music: {loaded_dict[song]['title']}\n",
-                        f"Composer: {composer}\n",
-                        f"Playlist: https://www.youtube.com/playlist?list={playlist_id}\n",
-                        f"Platform: {platform}\n\n",
-                        f"Please read the channel description."
-                    )
+                try:
+                    if str(song) in video["snippet"]["title"]:
+                        id = video["id"]["videoId"]
+                        
+                        unformatted_description = (
+                            f"Music: {loaded_dict[song]['title']}\n",
+                            f"Composer: {composer}\n",
+                            f"Playlist: https://www.youtube.com/playlist?list={playlist_id}\n",
+                            f"Platform: {platform}\n\n",
+                            f"Please read the channel description."
+                        )
 
-                    description = ""
-                    for item in unformatted_description:
-                        description += item
-                    
-                    update_request = youtube.videos().update(
-                        part="snippet",
-                        body={
-                            "id": id,
-                            "snippet": {
-                                "categoryId": 10,
-                                "defaultLanguage": "en",
-                                "description": str(description),
-                                "title": f"{loaded_dict[song]['title']} - {game_name}"
-                            }
-                        }
-                    )
-
-                    update_response = update_request.execute()
-
-                    playlist_request = youtube.playlistItems().insert(
-                        part="snippet",
-                        body={
-                            "snippet": {
-                                "playlistId": playlist_id,
-                                "resourceId": {
-                                    "kind": "youtube#video",
-                                    "videoId": id
+                        description = ""
+                        for item in unformatted_description:
+                            description += item
+                        
+                        update_request = youtube.videos().update(
+                            part="snippet",
+                            body={
+                                "id": id,
+                                "snippet": {
+                                    "categoryId": 10,
+                                    "defaultLanguage": "en",
+                                    "description": str(description),
+                                    "title": f"{loaded_dict[song]['title']} - {game_name}"
                                 }
                             }
-                        }
-                    )
+                        )
 
-                    playlist_response = playlist_request.execute()
+                        update_response = update_request.execute()
+
+                        playlist_request = youtube.playlistItems().insert(
+                            part="snippet",
+                            body={
+                                "snippet": {
+                                    "playlistId": playlist_id,
+                                    "resourceId": {
+                                        "kind": "youtube#video",
+                                        "videoId": id
+                                    }
+                                }
+                            }
+                        )
+
+                        playlist_response = playlist_request.execute()
+                        print(f"{loaded_dict[song]['title']} - {game_name} has been successfully uploaded.")
+                
+                except Exception as e:
+                    print("An error has occurred.\n")
+                    print(e)

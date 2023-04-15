@@ -12,14 +12,14 @@ def main():
         
         generation = generate_json()
 
-        if type(generation != int):
-            print("An error occurred.\n\n", generation)
+        if type(generation) != int:
+            print("An error occurred at the generation stage.\n\n", generation)
             return
         
         renderout = render()
 
         if type(renderout) != int:
-            print("An error occured.\n\n", renderout)
+            print("An error occured at the render stage.\n\n", renderout)
             return
 
         input(

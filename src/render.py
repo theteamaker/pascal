@@ -1,4 +1,4 @@
-import random, ffmpeg, json, os
+import random, json, os, ffmpeg
 
 def render():
 
@@ -6,7 +6,7 @@ def render():
         random.seed()
         batch_identifier = random.randint(100001, 999999)
 
-        os.mkdir(f"output/{batch_identifier}")
+        os.mkdir(f"output/{str(batch_identifier)}")
 
         with open('dictionary.json', 'r') as openfile:
             loaded_dict = json.load(openfile)
