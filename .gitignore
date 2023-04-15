@@ -1,0 +1,9 @@
+.venv/
+osts/
+src/__pycache__/
+dictionary.json
+ffmpeg/
+ffmpeg.exe
+src/client_secrets.json
+client_secrets.json
+output/
